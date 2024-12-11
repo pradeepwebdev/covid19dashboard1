@@ -1,0 +1,79 @@
+/* Container for the NotFound Page */
+.not-found-container {
+  background-color: #161625;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Container for the error code graphic */
+.vector-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 242px;
+  height: 160px;
+  background-color: #f9f8f8;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Error code styling */
+.error-code {
+  font-size: 72px;
+  font-weight: 700;
+  color: #161625;
+  margin: 0;
+}
+
+/* Error message styling */
+.error-message {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 20px;
+  margin: 20px 0;
+}
+
+/* Home button styling */
+.home-button {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #007bff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .vector-container {
+    width: 200px;
+    height: 120px;
+  }
+
+  .error-code {
+    font-size: 60px;
+  }
+
+  .error-message {
+    font-size: 10px;
+  }
+
+  .home-button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}

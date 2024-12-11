@@ -1,0 +1,93 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #161625;
+  color: #f8fafc;
+}
+
+/* Styling for "COVID19INDIA" text */
+.footer-logo {
+  font-family: 'Bree Serif', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #f8fafc; /* Default color */
+}
+
+.footer-logo-india {
+  color: #007bff; /* Blue color for "INDIA" */
+}
+
+/* Styling for the below text */
+.footer-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #94a3b8;
+  text-align: center;
+  max-width: 348px; /* Match layout width */
+  margin-top: 10px; /* Spacing below the logo */
+}
+
+
+/* Container for text and GitHub logo */
+.footer-text-container {
+  display: flex;
+  align-items: center; /* Vertically align text and icon */
+  justify-content: center; /* Center the entire container */
+  gap: 20px; /* Space between the text and icon */
+  margin-bottom: 20px; /* Spacing below the container */
+}
+
+/* Styling for GitHub icon */
+.github-icon {
+  font-size: 43px; /* Match the width and height */
+  height: 46px;
+  width: 43px;
+  color: #94a3b8; /* Border color */
+  border: 2px solid #94a3b8; /* Border around the icon */
+  border-radius: 50%; /* Make it circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.github-icon:hover {
+  transform: scale(1.2); /* Enlarge on hover */
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Space between Instagram and Twitter icons */
+}
+
+.icon {
+  font-size: 53px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.instagram-icon {
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.twitter-icon {
+  color: #1da1f2; /* Twitter official blue logo color */
+}
