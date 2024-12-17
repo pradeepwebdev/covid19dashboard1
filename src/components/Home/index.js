@@ -92,7 +92,7 @@ class Home extends Component {
                 </p>
                 <div className="stat-value-with-icon">
                   <img
-                    src="/path-to-checkmark-image.png"
+                    src="https://res.cloudinary.com/dtzems9yl/image/upload/v1734324416/check-mark1_affzqv.png"
                     alt="Check Mark"
                     className="stat-icon"
                   />
@@ -107,7 +107,7 @@ class Home extends Component {
                 </p>
                 <div className="stat-value-with-icon">
                   <img
-                    src="protection 1.png"
+                    src="https://res.cloudinary.com/dtzems9yl/image/upload/v1734324397/protection1_o9dnux.png"
                     alt="Protection"
                     className="stat-icon"
                   />
@@ -122,7 +122,7 @@ class Home extends Component {
                 </p>
                 <div className="stat-value-with-icon">
                   <img
-                    src="recovered 1.png"
+                    src="https://res.cloudinary.com/dtzems9yl/image/upload/v1734324363/recovered1_t7awgo.png"
                     alt="Recovered"
                     className="stat-icon"
                   />
@@ -137,7 +137,7 @@ class Home extends Component {
                 </p>
                 <div className="stat-value-with-icon">
                   <img
-                    src="breathing 1.png"
+                    src="https://res.cloudinary.com/dtzems9yl/image/upload/v1734324283/breathing1_q3o3jw.png"
                     alt="breathing"
                     className="stat-icon"
                   />

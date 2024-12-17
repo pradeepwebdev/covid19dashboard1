@@ -1,12 +1,11 @@
-/* Background and Layout */
+/* Container Styles */
 .state-specific-container {
-  background-color: #161625; /* Apply background color */
-  color: #ffffff; /* Ensure text is readable on the dark background */
-  width: 1440px; /* Match Figma width */
-  height: 3788px; /* Match Figma height */
-  margin: 0 auto; /* Center container horizontally */
-  padding: 20px; /* Add padding for inner content */
-  box-sizing: border-box; /* Include padding in dimensions */
+  background-color: #161625;
+  color: #ffffff;
+  width: 1440px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Header Section */
@@ -17,23 +16,14 @@
 }
 
 .state-title {
-  font-family: 'Roboto', sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: #0284c7;
 }
 
-.last-updated {
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  color: #cbd5e1;
-}
-
+.last-updated,
 .tested {
-  font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  font-weight: 400;
   color: #94a3b8;
 }
 
@@ -46,18 +36,15 @@
 
 .stats-card {
   width: 24%;
-  border: 2px solid transparent;
   border-radius: 12px;
   text-align: center;
   padding: 20px;
-  background-color: #1e1e2e; /* Subtle card background for dark theme */
+  background-color: #1e1e2e;
 }
 
 .stats-label {
-  font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  font-weight: 500;
-  color: #ffffff; /* Use white for contrast */
+  color: #ffffff;
 }
 
 .stats-icon {
@@ -67,65 +54,55 @@
 }
 
 .stats-count {
-  font-family: 'Roboto', sans-serif;
   font-size: 24px;
-  font-weight: 500;
   color: #ffffff;
 }
 
 /* District Section */
 .districts-container {
-  background-color: #161625;
-  color: #ffffff;
-  width: 1440px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
+  margin-top: 30px;
 }
 
 .districts-title {
-  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 500;
-  color: #0284c7;
+  color: #ff073a;
 }
-/* District Grid Layout */
+
 .districts-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-}
-
-/* District Card */
-.district-card {
-  background-color: #1e1e2e;
-  width: 202px;
-  height: 236px;
-  border-radius: 12px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
   padding: 20px;
-  box-sizing: border-box;
+  border-radius: 10px;
+  justify-content: space-between;
+  max-width: 90%; 
+  overflow-x: auto;
 }
 
-/* District Count */
+.district-group {
+  display: flex;
+  flex-direction: column; 
+  padding: 15px;
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.district-card {
+  display: flex;
+  flex-direction: row;
+  padding: 100px;
+  background-color: #1e1e2e;
+  border-radius: 8px;
+}
+
 .district-count {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
-  line-height: 29px;
-  color: #94a3b8;
-  margin-bottom: 10px;
+  color: #ffffff;
 }
 
-/* District Name */
 .district-name {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 19px;
+  font-size: 14px;
   color: #94a3b8;
-  text-align: center;
 }

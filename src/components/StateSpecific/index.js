@@ -26,34 +26,34 @@ class StateSpecific extends Component {
       const data = await response.json()
       const stateData = data[stateId]
 
-      if (stateData) {
-        const {
-          meta: {last_updated: lastUpdated},
-          total: {confirmed = 0, deceased = 0, recovered = 0, tested = 0},
-          districts,
-        } = stateData
+      if (!stateData) return
 
-        const activeCases = confirmed - (recovered + deceased)
-        const districtsList = Object.entries(districts || {}).map(
-          ([districtName, districtDetails]) => ({
-            name: districtName,
-            ...districtDetails.total,
-          }),
-        )
+      const {
+        meta: {last_updated: lastUpdated},
+        total: {confirmed = 0, deceased = 0, recovered = 0, tested = 0},
+        districts,
+      } = stateData
 
-        this.setState({
-          stateDetails: {
-            confirmed,
-            deceased,
-            recovered,
-            active: activeCases,
-          },
-          districtsData: districtsList,
-          lastUpdated,
-          tested,
-          isLoading: false,
-        })
-      }
+      const activeCases = confirmed - (recovered + deceased)
+      const districtsList = Object.entries(districts || {}).map(
+        ([districtName, districtDetails]) => ({
+          name: districtName,
+          count: districtDetails?.total?.confirmed || 0,
+        }),
+      )
+
+      this.setState({
+        stateDetails: {
+          confirmed,
+          deceased,
+          recovered,
+          active: activeCases,
+        },
+        districtsData: districtsList,
+        lastUpdated,
+        tested,
+        isLoading: false,
+      })
     } catch (error) {
       console.error('Error fetching state data:', error)
     }
@@ -75,14 +75,20 @@ class StateSpecific extends Component {
     </div>
   )
 
+  renderDistrictGroup = (districts, groupIndex) => (
+    <div key={groupIndex} className="district-group">
+      {districts.map((district, index) => (
+        <div key={index} className="district-card">
+          <p className="district-count">{district.count}</p>
+          <p className="district-name">{district.name}</p>
+        </div>
+      ))}
+    </div>
+  )
+
   render() {
-    const {
-      stateDetails,
-      districtsData,
-      lastUpdated,
-      tested,
-      isLoading,
-    } = this.state
+    const {stateDetails, districtsData, lastUpdated, tested, isLoading} =
+      this.state
 
     if (isLoading) {
       return (
@@ -93,6 +99,12 @@ class StateSpecific extends Component {
     }
 
     const {confirmed, active, recovered, deceased} = stateDetails
+
+    // Group districts into chunks of 4
+    const districtGroups = []
+    for (let i = 0; i < districtsData.length; i += 4) {
+      districtGroups.push(districtsData.slice(i, i + 4))
+    }
 
     return (
       <div className="state-specific-container">
@@ -111,7 +123,7 @@ class StateSpecific extends Component {
             confirmed,
             '#FF073A',
             'state specific confirmed cases pic',
-            '/images/check-mark 1.png',
+            'https://res.cloudinary.com/dtzems9yl/image/upload/v1734324416/check-mark1_affzqv.png',
             'stateSpecificConfirmedCasesContainer',
           )}
           {this.renderStatsCard(
@@ -119,7 +131,7 @@ class StateSpecific extends Component {
             active,
             '#007BFF',
             'state specific active cases pic',
-            '/public/img/protection 1.png',
+            'https://res.cloudinary.com/dtzems9yl/image/upload/v1734324397/protection1_o9dnux.png',
             'stateSpecificActiveCasesContainer',
           )}
           {this.renderStatsCard(
@@ -127,7 +139,7 @@ class StateSpecific extends Component {
             recovered,
             '#28A745',
             'state specific recovered cases pic',
-            '/public/img/recovered 1.png',
+            'https://res.cloudinary.com/dtzems9yl/image/upload/v1734324363/recovered1_t7awgo.png',
             'stateSpecificRecoveredCasesContainer',
           )}
           {this.renderStatsCard(
@@ -135,19 +147,16 @@ class StateSpecific extends Component {
             deceased,
             '#6C757D',
             'state specific deceased cases pic',
-            '/public/img/breathing 1.png',
+            'https://res.cloudinary.com/dtzems9yl/image/upload/v1734324283/breathing1_q3o3jw.png',
             'stateSpecificDeceasedCasesContainer',
           )}
         </div>
         <div className="districts-container">
           <h2 className="districts-title">Top Districts</h2>
           <div className="districts-grid">
-            {districtsData.map(district => (
-              <div key={district.id} className="district-card">
-                <p className="district-count">{district.count}</p>
-                <p className="district-name">{district.name}</p>
-              </div>
-            ))}
+            {districtGroups.map((group, index) =>
+              this.renderDistrictGroup(group, index),
+            )}
           </div>
         </div>
       </div>
