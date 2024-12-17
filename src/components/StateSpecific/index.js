@@ -61,26 +61,26 @@ class StateSpecific extends Component {
 
   renderStatsCard = (label, count, color, iconAlt, iconSrc, testId) => (
     <div
-      className="stats-card"
+      className='stats-card'
       style={{borderColor: color}}
       data-testid={testId}
     >
-      <p className="stats-label" style={{color}}>
+      <p className='stats-label' style={{color}}>
         {label}
       </p>
-      <img src={iconSrc} alt={iconAlt} className="stats-icon" />
-      <p className="stats-count" style={{color}}>
+      <img src={iconSrc} alt={iconAlt} className='stats-icon' />
+      <p className='stats-count' style={{color}}>
         {count}
       </p>
     </div>
   )
 
   renderDistrictGroup = (districts, groupIndex) => (
-    <div key={groupIndex} className="district-group">
+    <div key={groupIndex} className='district-group'>
       {districts.map((district, index) => (
-        <div key={index} className="district-card">
-          <p className="district-count">{district.count}</p>
-          <p className="district-name">{district.name}</p>
+        <div key={index} className='district-card'>
+          <p className='district-count'>{district.count}</p>
+          <p className='district-name'>{district.name}</p>
         </div>
       ))}
     </div>
@@ -92,8 +92,8 @@ class StateSpecific extends Component {
 
     if (isLoading) {
       return (
-        <div className="loader-container" data-testid="stateDetailsLoader">
-          <Loader type="ThreeDots" color="#007BFF" height={80} width={80} />
+        <div className='loader-container' data-testid='stateDetailsLoader'>
+          <Loader type='ThreeDots' color='#007BFF' height={80} width={80} />
         </div>
       )
     }
@@ -107,17 +107,17 @@ class StateSpecific extends Component {
     }
 
     return (
-      <div className="state-specific-container">
-        <div className="state-header">
-          <h1 className="state-title">Covid-19 Cases</h1>
-          <p className="last-updated">
+      <div className='state-specific-container'>
+        <div className='state-header'>
+          <h1 className='state-title'>Covid-19 Cases</h1>
+          <p className='last-updated'>
             Last update on {new Date(lastUpdated).toLocaleDateString()}
           </p>
-          <p className="tested" data-testid="testedCount">
+          <p className='tested' data-testid='testedCount'>
             Tested: {tested.toLocaleString()}
           </p>
         </div>
-        <div className="stats-container">
+        <div className='stats-container'>
           {this.renderStatsCard(
             'Confirmed',
             confirmed,
@@ -151,9 +151,9 @@ class StateSpecific extends Component {
             'stateSpecificDeceasedCasesContainer',
           )}
         </div>
-        <div className="districts-container">
-          <h2 className="districts-title">Top Districts</h2>
-          <div className="districts-grid">
+        <div className='districts-container'>
+          <h2 className='districts-title'>Top Districts</h2>
+          <div className='districts-grid'>
             {districtGroups.map((group, index) =>
               this.renderDistrictGroup(group, index),
             )}
