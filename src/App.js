@@ -1,11 +1,11 @@
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './components/Home'
-import StateSpecific from './components/StateSpecific'
-import About from './components/About'
-import NotFound from './components/NotFound'
-import './App.css'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import StateSpecific from './components/StateSpecific';
+import About from './components/About';
+import NotFound from './components/NotFound';
+import './App.css';
 
 const statesList = [
   {
@@ -152,23 +152,19 @@ const statesList = [
     state_code: 'WB',
     state_name: 'West Bengal',
   },
-]
+];
 
 const App = () => (
   <Router>
     <Header />
     <Switch>
-      <Route
-        exact
-        path="/"
-        component={() => <Home statesList={statesList} />}
-      />
+      <Route exact path="/" component={() => <Home statesList={statesList} />} />
       <Route path="/state/:stateId" component={StateSpecific} />
       <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
     <Footer />
   </Router>
-)
+);
 
-export default App
+export default App;

@@ -1,9 +1,9 @@
-import {Component} from 'react'
-import {Link} from 'react-router-dom'
-import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
-import {BsSearch} from 'react-icons/bs'
-import {API_URL} from '../../constants'
-import './index.css'
+import { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FcGenericSortingAsc, FcGenericSortingDesc } from 'react-icons/fc';
+import { BsSearch } from 'react-icons/bs';
+import { API_URL } from '../../constants';
+import './index.css';
 
 class Home extends Component {
   state = {
@@ -11,15 +11,15 @@ class Home extends Component {
     filteredData: [],
     searchTerm: '',
     loading: true,
-  }
+  };
 
   componentDidMount() {
-    this.fetchStatesData()
+    this.fetchStatesData();
   }
 
   fetchStatesData = async () => {
-    const response = await fetch(API_URL)
-    const data = await response.json()
+    const response = await fetch(API_URL);
+    const data = await response.json();
 
     const statesList = Object.keys(data).map(stateCode => ({
       stateCode,
@@ -27,41 +27,40 @@ class Home extends Component {
       confirmed: data[stateCode]?.total?.confirmed || 0,
       active:
         (data[stateCode]?.total?.confirmed || 0) -
-        ((data[stateCode]?.total?.recovered || 0) +
-          (data[stateCode]?.total?.deceased || 0)),
+        ((data[stateCode]?.total?.recovered || 0) + (data[stateCode]?.total?.deceased || 0)),
       recovered: data[stateCode]?.total?.recovered || 0,
       deceased: data[stateCode]?.total?.deceased || 0,
       population: data[stateCode]?.meta?.population || 0,
-    }))
+    }));
 
     this.setState({
       statesData: statesList,
       filteredData: statesList,
       loading: false,
-    })
-  }
+    });
+  };
 
   handleSearch = event => {
-    const {statesData} = this.state
-    const searchTerm = event.target.value.toLowerCase()
+    const { statesData } = this.state;
+    const searchTerm = event.target.value.toLowerCase();
     const filteredData = statesData.filter(state =>
-      state.stateName.toLowerCase().includes(searchTerm),
-    )
-    this.setState({searchTerm, filteredData})
-  }
+      state.stateName.toLowerCase().includes(searchTerm)
+    );
+    this.setState({ searchTerm, filteredData });
+  };
 
   sortStates = order => {
-    const {filteredData} = this.state
+    const { filteredData } = this.state;
     const sortedData = [...filteredData].sort((a, b) =>
       order === 'asc'
         ? a.stateName.localeCompare(b.stateName)
-        : b.stateName.localeCompare(a.stateName),
-    )
-    this.setState({filteredData: sortedData})
-  }
+        : b.stateName.localeCompare(a.stateName)
+    );
+    this.setState({ filteredData: sortedData });
+  };
 
   render() {
-    const {filteredData, searchTerm, loading} = this.state
+    const { filteredData, searchTerm, loading } = this.state;
 
     return (
       <div className="home-container">
@@ -87,7 +86,7 @@ class Home extends Component {
             {/* Stats container */}
             <div className="stats-container">
               <div className="stat-box">
-                <p className="stat-title" style={{color: '#FF073A'}}>
+                <p className="stat-title" style={{ color: '#FF073A' }}>
                   Confirmed
                 </p>
                 <div className="stat-value-with-icon">
@@ -96,13 +95,13 @@ class Home extends Component {
                     alt="Check Mark"
                     className="stat-icon"
                   />
-                  <p className="stat-value" style={{color: '#FF073A'}}>
+                  <p className="stat-value" style={{ color: '#FF073A' }}>
                     34285612
                   </p>
                 </div>
               </div>
               <div className="stat-box">
-                <p className="stat-title" style={{color: '#007BFF'}}>
+                <p className="stat-title" style={{ color: '#007BFF' }}>
                   Active
                 </p>
                 <div className="stat-value-with-icon">
@@ -111,13 +110,13 @@ class Home extends Component {
                     alt="Protection"
                     className="stat-icon"
                   />
-                  <p className="stat-value" style={{color: '#007BFF'}}>
+                  <p className="stat-value" style={{ color: '#007BFF' }}>
                     165803
                   </p>
                 </div>
               </div>
               <div className="stat-box">
-                <p className="stat-title" style={{color: '#28A745'}}>
+                <p className="stat-title" style={{ color: '#28A745' }}>
                   Recovered
                 </p>
                 <div className="stat-value-with-icon">
@@ -126,13 +125,13 @@ class Home extends Component {
                     alt="Recovered"
                     className="stat-icon"
                   />
-                  <p className="stat-value" style={{color: '#28A745'}}>
+                  <p className="stat-value" style={{ color: '#28A745' }}>
                     33661339
                   </p>
                 </div>
               </div>
               <div className="stat-box">
-                <p className="stat-title" style={{color: '#6C757D'}}>
+                <p className="stat-title" style={{ color: '#6C757D' }}>
                   Deceased
                 </p>
                 <div className="stat-value-with-icon">
@@ -141,7 +140,7 @@ class Home extends Component {
                     alt="breathing"
                     className="stat-icon"
                   />
-                  <p className="stat-value" style={{color: '#6C757D'}}>
+                  <p className="stat-value" style={{ color: '#6C757D' }}>
                     458470
                   </p>
                 </div>
@@ -149,10 +148,7 @@ class Home extends Component {
             </div>
 
             {/* Table to display state-wise data */}
-            <div
-              className="state-wise-data"
-              data-testid="stateWiseCovidDataTable"
-            >
+            <div className="state-wise-data" data-testid="stateWiseCovidDataTable">
               <table>
                 <thead>
                   <tr>
@@ -188,10 +184,7 @@ class Home extends Component {
                   {filteredData.map(state => (
                     <tr key={state.stateCode} data-testid="stateDataListItem">
                       <td>
-                        <Link
-                          to={`/state/${state.stateCode}`}
-                          className="state-link"
-                        >
+                        <Link to={`/state/${state.stateCode}`} className="state-link">
                           {state.stateName}
                         </Link>
                       </td>
@@ -208,8 +201,8 @@ class Home extends Component {
           </>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default Home
+export default Home;

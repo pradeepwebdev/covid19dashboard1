@@ -1,10 +1,10 @@
-import {Link, withRouter} from 'react-router-dom'
-import './index.css'
+import { Link, withRouter } from 'react-router-dom';
+import './index.css';
 
-const Header = ({history}) => {
+const Header = ({ history }) => {
   const navigateToHome = () => {
-    history.push('/')
-  }
+    history.push('/');
+  };
 
   return (
     <nav className="header-container">
@@ -24,7 +24,7 @@ const Header = ({history}) => {
         </li>
       </ul>
     </nav>
-  )
-}
+  );
+};
 
-export default withRouter(Header)
+export default withRouter(Header);

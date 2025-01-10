@@ -1,5 +1,5 @@
-import {Link} from 'react-router-dom'
-import './index.css'
+import { Link } from 'react-router-dom';
+import './index.css';
 
 const NotFound = () => (
   <div className="not-found-container">
@@ -14,6 +14,6 @@ const NotFound = () => (
       Home
     </Link>
   </div>
-)
+);
 
-export default NotFound
+export default NotFound;
