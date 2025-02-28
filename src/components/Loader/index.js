@@ -1,5 +1,5 @@
-import './index.css'
+import './index.css';
 
-const Loader = () => <div className="loader">Loading...</div>
+const Loader = () => <div className="loader">Loading...</div>;
 
-export default Loader
+export default Loader;

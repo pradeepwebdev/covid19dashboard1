@@ -91,15 +91,14 @@
 /* Table styling */
 table {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 20px;
+  border-collapse: collapse;
 }
 
 th,
 td {
   padding: 6px;
   text-align: left;
-  border: 1px solid #e1e1e6;
 }
 
 th {
@@ -124,11 +123,13 @@ tr:hover {
 .state-link:hover {
   text-decoration: underline;
 }
+
 .states-column .header-with-sort {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .sort-icons button {
   background: none;
   border: none;

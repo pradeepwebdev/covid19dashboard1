@@ -5,6 +5,49 @@ import { BsSearch } from 'react-icons/bs';
 import { API_URL } from '../../constants';
 import './index.css';
 
+// Mapping of state codes to full state names
+const stateCodeToFullName = {
+  AP: 'Andhra Pradesh',
+  AN: 'Andaman and Nicobar Islands',
+  AR: 'Arunachal Pradesh',
+  AS: 'Assam',
+  BR: 'Bihar',
+  CH: 'Chandigarh',
+  CT: 'Chhattisgarh',
+  DD: 'Daman and Diu',
+  DH: 'Dadra and Nagar Haveli',
+  DL: 'Delhi',
+  DN: 'Dadra and Nagar Haveli',
+  GA: 'Goa',
+  GJ: 'Gujarat',
+  HR: 'Haryana',
+  HP: 'Himachal Pradesh',
+  JK: 'Jammu and Kashmir',
+  JH: 'Jharkhand',
+  KA: 'Karnataka',
+  KL: 'Kerala',
+  LA: 'Leh',
+  LD: 'Lakshadweep',
+  MP: 'Madhya Pradesh',
+  MH: 'Maharashtra',
+  MN: 'Manipur',
+  ML: 'Meghalaya',
+  MZ: 'Mizoram',
+  NL: 'Nagaland',
+  OR: 'Odisha',
+  PB: 'Punjab',
+  PY: 'Puducherry',
+  RJ: 'Rajasthan',
+  SK: 'Sikkim',
+  TN: 'Tamil Nadu',
+  TG: 'Telangana',
+  TR: 'Tripura',
+  UP: 'Uttar Pradesh',
+  UT: 'Uttarakhand',
+  WB: 'West Bengal',
+  // Add more states as needed
+};
+
 class Home extends Component {
   state = {
     statesData: [],
@@ -23,7 +66,7 @@ class Home extends Component {
 
     const statesList = Object.keys(data).map(stateCode => ({
       stateCode,
-      stateName: stateCode,
+      stateName: stateCodeToFullName[stateCode] || stateCode, // Use the full name from the mapping
       confirmed: data[stateCode]?.total?.confirmed || 0,
       active:
         (data[stateCode]?.total?.confirmed || 0) -
@@ -43,10 +86,12 @@ class Home extends Component {
   handleSearch = event => {
     const { statesData } = this.state;
     const searchTerm = event.target.value.toLowerCase();
-    const filteredData = statesData.filter(state =>
-      state.stateName.toLowerCase().includes(searchTerm)
+    const filteredData = statesData.filter(
+      state => state.stateName.toLowerCase().includes(searchTerm) // Case-insensitive search
     );
-    this.setState({ searchTerm, filteredData });
+    console.log(`Filtered Data: ${filteredData.findIndex.name}`)
+    console.log(`Filtered Data: ${searchTerm.}`)
+    this.setState({ searchTerm, filteredData })
   };
 
   sortStates = order => {
@@ -184,15 +229,19 @@ class Home extends Component {
                   {filteredData.map(state => (
                     <tr key={state.stateCode} data-testid="stateDataListItem">
                       <td>
-                        <Link to={`/state/${state.stateCode}`} className="state-link">
-                          {state.stateName}
+                        <Link
+                          to={`/state/${state.stateCode}`}
+                          className="state-link"
+                          style={{ color: '#ffffff' }}
+                        >
+                          {state.stateName} {/* Display full state name */}
                         </Link>
                       </td>
-                      <td>{state.confirmed}</td>
-                      <td>{state.active}</td>
-                      <td>{state.recovered}</td>
-                      <td>{state.deceased}</td>
-                      <td>{state.population}</td>
+                      <td style={{ color: '#FF073A' }}>{state.confirmed}</td>
+                      <td style={{ color: '#3b82f6' }}>{state.active}</td>
+                      <td style={{ color: '#28A745' }}>{state.recovered}</td>
+                      <td style={{ color: '#6C757D' }}>{state.deceased}</td>
+                      <td style={{ color: '#6C757D' }}>{state.population}</td>
                     </tr>
                   ))}
                 </tbody>

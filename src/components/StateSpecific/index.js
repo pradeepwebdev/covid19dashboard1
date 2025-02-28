@@ -24,6 +24,8 @@ class StateSpecific extends Component {
     isLoading: true,
     chartData: [],
     timelineData: [],
+    sortedDistrictsData: [],
+    sortBy: 'confirmed', // Default sorting order by confirmed cases
   };
 
   componentDidMount() {
@@ -52,27 +54,23 @@ class StateSpecific extends Component {
       const districtsList = Object.entries(districts || {}).map(
         ([districtName, districtDetails]) => ({
           name: districtName,
-          count: districtDetails?.total?.confirmed || 0,
+          confirmed: districtDetails?.total?.confirmed || 0,
+          active:
+            districtDetails?.total?.confirmed -
+              (districtDetails?.total?.recovered + districtDetails?.total?.deceased) || 0,
+          recovered: districtDetails?.total?.recovered || 0,
+          deceased: districtDetails?.total?.deceased || 0,
         })
       );
 
-      const chartData = [
-        { name: 'Day 1', confirmed, active: activeCases, recovered, deceased },
-        {
-          name: 'Day 2',
-          confirmed: confirmed + 1000,
-          active: activeCases + 500,
-          recovered: recovered + 800,
-          deceased: deceased + 100,
-        },
-        {
-          name: 'Day 3',
-          confirmed: confirmed + 2000,
-          active: activeCases + 1000,
-          recovered: recovered + 1500,
-          deceased: deceased + 200,
-        },
-      ];
+      // Generate chart data for the last 10 days
+      const chartData = Array.from({ length: 10 }, (_, index) => ({
+        name: `Day ${index + 1}`,
+        confirmed: confirmed + 1000 * (index + 1),
+        active: activeCases + 500 * (index + 1),
+        recovered: recovered + 800 * (index + 1),
+        deceased: deceased + 100 * (index + 1),
+      }));
 
       this.setState({
         stateDetails: {
@@ -84,6 +82,7 @@ class StateSpecific extends Component {
           lastUpdated,
         },
         districtsData: districtsList,
+        sortedDistrictsData: districtsList.sort((a, b) => b.confirmed - a.confirmed),
         lastUpdated,
         tested,
         chartData,
@@ -114,14 +113,29 @@ class StateSpecific extends Component {
         };
       });
 
-      this.setState({ timelineData: formattedData });
+      // Select only the last 10 days of data for the spread trends
+      const last10Days = formattedData.slice(-10);
+
+      this.setState({ timelineData: last10Days });
     } catch (error) {
       console.error('Error fetching timeline data:', error);
     }
   };
 
+  handleCardClick = type => {
+    this.setState(prevState => ({
+      sortBy: type,
+      sortedDistrictsData: prevState.districtsData.sort((a, b) => b[type] - a[type]),
+    }));
+  };
+
   renderStatsCard = (label, count, color, iconAlt, iconSrc, testId) => (
-    <div className="stats-card" style={{ borderColor: color }} data-testid={testId}>
+    <div
+      className="stats-card"
+      style={{ borderColor: color }}
+      data-testid={testId}
+      onClick={() => this.handleCardClick(label.toLowerCase())}
+    >
       <p className="stats-label" style={{ color }}>
         {label}
       </p>
@@ -136,7 +150,7 @@ class StateSpecific extends Component {
     <div key={groupIndex} className="district-group">
       {districts.map(district => (
         <div key={district.name} className="district-card">
-          <p className="district-count">{district.count}</p>
+          <p className="district-count">{district[this.state.sortBy]}</p>
           <p className="district-name">{district.name}</p>
         </div>
       ))}
@@ -148,7 +162,21 @@ class StateSpecific extends Component {
     return (
       <div className="line-charts-wrapper">
         <h2 className="chart-title left-aligned">Daily Spread Trends</h2>
-        <div className="line-charts-container">
+        <div className="line-charts-confirmed-container">
+          <LineChart
+            width={730}
+            height={250}
+            data={timelineData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey="date" stroke="#007BFF" axisLine={{ stroke: '#007BFF' }} />
+            <YAxis axisLine={{ stroke: '#007BFF' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="confirmed" stroke="#007BFF" />
+          </LineChart>
+        </div>
+        <div className="line-charts-active-container">
           <LineChart
             width={730}
             height={250}
@@ -160,6 +188,34 @@ class StateSpecific extends Component {
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="active" stroke="#007BFF" />
+          </LineChart>
+        </div>
+        <div className="line-charts-recovered-container">
+          <LineChart
+            width={730}
+            height={250}
+            data={timelineData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey="date" stroke="#007BFF" axisLine={{ stroke: '#007BFF' }} />
+            <YAxis axisLine={{ stroke: '#007BFF' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="recovered" stroke="#28A745" />
+          </LineChart>
+        </div>
+        <div className="line-charts-deceased-container">
+          <LineChart
+            width={730}
+            height={250}
+            data={timelineData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis dataKey="date" stroke="#007BFF" axisLine={{ stroke: '#007BFF' }} />
+            <YAxis axisLine={{ stroke: '#007BFF' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="deceased" stroke="#6C757D" />
           </LineChart>
         </div>
       </div>
@@ -186,7 +242,7 @@ class StateSpecific extends Component {
   };
 
   render() {
-    const { stateDetails, districtsData, lastUpdated, tested, isLoading } = this.state;
+    const { stateDetails, sortedDistrictsData, lastUpdated, tested, isLoading } = this.state;
 
     if (isLoading) {
       return (
@@ -199,8 +255,8 @@ class StateSpecific extends Component {
     const { confirmed, active, recovered, deceased } = stateDetails;
 
     const districtGroups = [];
-    for (let i = 0; i < districtsData.length; i += 4) {
-      districtGroups.push(districtsData.slice(i, i + 4));
+    for (let i = 0; i < sortedDistrictsData.length; i += 4) {
+      districtGroups.push(sortedDistrictsData.slice(i, i + 4));
     }
 
     return (
